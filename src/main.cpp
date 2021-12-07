@@ -330,7 +330,7 @@ void setup() {
   updateLcd(STARTING);
 
   pinMode(LED_BUILTIN, OUTPUT);
-  digitalWrite(LED_BUILTIN, led_state);
+  digitalWrite(LED_BUILTIN, ledState);
   pinMode(LOCK_PIN, INPUT);
   pinMode(SVC_PIN, INPUT);
   pinMode(TICK_PIN, INPUT);
@@ -390,10 +390,9 @@ void loop() {
       updateLcd(TIME);
       if (tick) {
         ledState = !ledState;
-        digitalWrite(LED_BUILTIN, led_state);
-        time_t now = time(nullptr);
+        digitalWrite(LED_BUILTIN, ledState);
         if (upAt == 0) {
-          upAt = now;
+          upAt = time(nullptr);
         }
         tick = false;
         #ifdef PRINT_TIME_TO_SERIAL
