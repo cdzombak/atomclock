@@ -34,6 +34,7 @@ extern "C" int _gettimeofday_r(struct _reent* unused, struct timeval *tp, void *
 #ifndef CFG_UTC_DISP_S
 #define CFG_UTC_DISP_S (20)
 #endif
+// #define PRINT_TIME_TO_SERIAL
 
 /* Display */
 
@@ -394,12 +395,15 @@ void loop() {
         if (upAt == 0) {
           upAt = now;
         }
+        tick = false;
+        #ifdef PRINT_TIME_TO_SERIAL
+        time_t now = time(nullptr);
         struct tm timeinfo; // NOLINT(cppcoreguidelines-pro-type-member-init)
         localtime_r(&now, &timeinfo);
         Serial.printf_P(PSTR("Current time (local): %s"), asctime(&timeinfo));
         gmtime_r(&now, &timeinfo);
         Serial.printf_P(PSTR("Current time (UTC):   %s"), asctime(&timeinfo));
-        tick = false;
+        #endif
       }
       verifyLock();
       break;
