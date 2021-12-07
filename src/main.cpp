@@ -78,6 +78,12 @@ struct timeval oscTime;
 
 /* Helper Functions */
 
+#define SECS_PER_MIN (60)
+#define SECS_PER_HR (SECS_PER_MIN * 60)
+#define SECS_PER_DAY (SECS_PER_HR * 24)
+#define SECS_PER_MONTH (SECS_PER_DAY * 30)
+#define SECS_PER_YR (31536000)
+
 #ifndef min
 #define min(a,b) (((a) < (b)) ? (a) : (b))
 #endif
@@ -194,16 +200,16 @@ void updateLcd(LCDState desiredState) {
         } else if (timeinfo.tm_sec < CFG_UPTIME_DISP_S && upAt != 0) {
           char row1[17];
           time_t upSec = now - upAt;
-          if (upSec > 31536000) {
-            sprintf(row1, "  up: %2d years  ", (int)(upSec/31536000));
-          } else if (upSec > 2592000) {
-            sprintf(row1, "  up %2d months  ", (int)(upSec/2592000));
-          } else if (upSec > 86400) {
-            sprintf(row1, "   up %2d days   ", (int)(upSec/86400));
-          } else if (upSec > 3600) {
-            sprintf(row1, "  up: %2d hours  ", (int)(upSec/3600));
-          } else if (upSec > 60) {
-            sprintf(row1, " up: %2d minutes ", (int)(upSec/60));
+          if (upSec >= (2*SECS_PER_YR)) {
+            sprintf(row1, "  up: %2d years  ", (int)(upSec/SECS_PER_YR));
+          } else if (upSec >= (2*SECS_PER_MONTH)) {
+            sprintf(row1, "  up %2d months  ", (int)(upSec/SECS_PER_MONTH));
+          } else if (upSec >= (3*SECS_PER_DAY)) {
+            sprintf(row1, "   up %2d days   ", (int)(upSec/SECS_PER_DAY));
+          } else if (upSec >= SECS_PER_HR) {
+            sprintf(row1, "  up: %2d hours  ", (int)(upSec/SECS_PER_HR));
+          } else if (upSec >= SECS_PER_MIN) {
+            sprintf(row1, " up: %2d minutes ", (int)(upSec/SECS_PER_MIN));
           } else {
             sprintf(row1, " up: %2d seconds ", (int)(upSec));
           }
