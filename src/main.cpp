@@ -351,6 +351,9 @@ void setup() {
 #ifdef OSC_FORCE_SERVICE
   Serial.printf_P(PSTR("WARNING: Oscillator service indicator is forced on.\r\n"));
 #endif
+  if (CFG_UTC_DISP_S <= CFG_UPTIME_DISP_S) {
+    Serial.printf_P(PSTR("WARNING: CFG_UTC_DISP_S <= CFG_UPTIME_DISP_S; UTC time will not be displayed."));
+  }
   Serial.printf_P(PSTR("Waiting for oscillator lock.\r\n"));
 
   // Slight delay after power-on to allow oscillator to drive lock/svc outputs:
