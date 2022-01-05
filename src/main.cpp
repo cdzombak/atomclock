@@ -352,6 +352,12 @@ void setup() {
   Serial.printf_P(PSTR("WARNING: Oscillator service indicator is forced on.\r\n"));
 #endif
   Serial.printf_P(PSTR("Waiting for oscillator lock.\r\n"));
+
+  // Slight delay after power-on to allow oscillator to drive lock/svc outputs:
+  // This prevents momentarily advancing from LOCK_WAIT to WIFI_WAIT immediately after
+  // power-on, and could also be addressed with a high-value pull-up
+  // resistor on the LOCK signal at the ESP8266.
+  delay(1000);
 }
 
 void loop() {
