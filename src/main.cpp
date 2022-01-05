@@ -331,7 +331,6 @@ void setup() {
   oscTime.tv_sec = 0;
   oscTime.tv_usec = 0;
 
-  Serial.begin(SERIAL_BAUD);
   lcd.begin(16, 2);
   updateLcd(STARTING);
 
@@ -342,6 +341,7 @@ void setup() {
   pinMode(TICK_PIN, INPUT);
   attachInterrupt(digitalPinToInterrupt(TICK_PIN), tickISR, TICK_EDGE);
 
+  Serial.begin(SERIAL_BAUD);
   Serial.printf_P(PSTR("Initialized.\r\n"));
 #ifdef OSC_IGNORE_LOCK
   Serial.printf_P(PSTR("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\r\n"));
