@@ -10,7 +10,7 @@ extern "C" int _gettimeofday_r(struct _reent* unused, struct timeval *tp, void *
 #define LOCK_PIN D5
 #define TICK_PIN D6
 #define SVC_PIN  D7
-#define TICK_EDGE RISING
+#define TICK_EDGE FALLING // rising just doesn't work with this particular microcontroller
 // #define OSC_IGNORE_LOCK
 // #define OSC_FORCE_SERVICE
 
